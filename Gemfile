@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+source 'https://rubygems.pkg.github.com/lucasgomide'
 
 ruby '2.6.1'
 
@@ -12,6 +12,8 @@ gem 'sidekiq'
 gem 'curb'
 gem 'dry-rails'
 gem 'dry-transaction'
+
+gem 'fundamenthus-client', '<1'
 
 group :development, :test do
   gem 'pry-byebug'
