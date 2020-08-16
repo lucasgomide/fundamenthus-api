@@ -13,6 +13,7 @@ Dry::Rails.container do
 
   namespace(:fundamenthus) do
     register(:b3) { Fundamenthus::Source::B3 }
+    register(:status_invest) { Fundamenthus::Source::StatusInvest }
   end
 
   auto_register!(*custom_paths)
