@@ -11,5 +11,9 @@ Dry::Rails.container do
     'contracts',
   ]
 
+  namespace(:fundamenthus) do
+    register(:b3) { Fundamenthus::Source::B3 }
+  end
+
   auto_register!(*custom_paths)
 end
