@@ -11,7 +11,7 @@ RSpec.shared_context 'with controller_container_stubs', shared_context: :metadat
   end
 
   after do
-    AffiliateApi::Container.unstub
+    Fundamenthus::Container.unstub
   end
 end
 
@@ -23,6 +23,6 @@ RSpec.shared_context 'with container_stubs', shared_context: :metadata do
   end
 
   after do
-    AffiliateApi::Container.unstub
+    Fundamenthus::Container.unstub
   end
 end
