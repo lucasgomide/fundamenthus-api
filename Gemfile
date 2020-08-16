@@ -11,7 +11,7 @@ gem 'redis'
 gem 'sidekiq'
 gem 'curb'
 gem 'dry-rails'
-gem 'dry-transaction'
+gem 'dry-monads'
 
 gem 'fundamenthus-client', '<1'
 
