@@ -12,7 +12,7 @@ gem 'sidekiq'
 gem 'curb'
 gem 'dry-rails'
 gem 'dry-monads'
-
+gem 'google-drive'
 gem 'fundamenthus-client', '<1'
 
 group :development, :test do

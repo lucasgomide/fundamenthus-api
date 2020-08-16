@@ -9,6 +9,7 @@ Dry::Rails.container do
   custom_paths = [
     'operations',
     'contracts',
+    'builders',
   ]
 
   namespace(:fundamenthus) do
