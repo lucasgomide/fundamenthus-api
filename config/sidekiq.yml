@@ -1,0 +1,9 @@
+:concurrency: <%= ENV.fetch('SIDEKIQ_CONCURRENCY', 10) %>
+:queues:
+  - source
+:schedule:
+  collect:
+    cron: '0 0 * * 0'
+    class: CollectWorker
+    queue: source
+    description: 'This job collect and save data from the available source'
