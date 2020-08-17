@@ -10,6 +10,7 @@ Dry::Rails.container do
     'operations',
     'contracts',
     'builders',
+    'factories',
   ]
 
   namespace(:fundamenthus) do

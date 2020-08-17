@@ -69,7 +69,7 @@ RSpec.configure do |config|
     Fundamenthus::Container.enable_stubs!
   end
 
-  %i[operation].each do |type|
+  %i[operation builder].each do |type|
     config.include_context 'with container_stubs', include_shared: true, type: type
   end
 end
