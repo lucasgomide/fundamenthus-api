@@ -8,7 +8,18 @@ RSpec.describe Storages::GoogleSheetsBuilder, type: :builder do
 
   it { expect(described_class::SPREADSHEET_KEY).to eql('12hEZvlN8yPyILrvLT80J_6-NDLfkmz2iJ4IX0SLeEcU') }
 
+  context '.add_source_name' do
+    subject(:add_source_name) { builder.add_source_name(source_name) }
+    let(:source_name) { 'any_source' }
+
+    its(:attributes) { is_expected.to eql(source_name: 'any_source') }
+  end
+
   context '.build' do
+    let(:builder) do
+      described_class.new(google_session: google_session, attributes: { source_name: 'the_source_name' })
+    end
+
     subject(:builder_build) { builder.build }
 
     let(:spreadsheet) { instance_spy(GoogleDrive::Spreadsheet) }
@@ -28,7 +39,21 @@ RSpec.describe Storages::GoogleSheetsBuilder, type: :builder do
 
     it do
       builder_build
-      expect(spreadsheet).to have_received(:worksheet_by_title).with(:stocks)
+      expect(spreadsheet).to have_received(:worksheet_by_title).with('The source name - Fundamentos')
+    end
+
+    it do
+      builder_build
+      expect(spreadsheet).not_to have_received(:add_worksheet).with('The source name - Fundamentos')
+    end
+
+    context 'when the worksheet does not exists' do
+      let(:worksheet) { nil }
+
+      it do
+        builder_build
+        expect(spreadsheet).to have_received(:add_worksheet).with('The source name - Fundamentos')
+      end
     end
 
     context 'checking worksheets' do

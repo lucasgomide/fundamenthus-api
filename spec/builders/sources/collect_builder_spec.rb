@@ -46,6 +46,11 @@ RSpec.describe Sources::CollectBuilder, type: :builder do
       expect(storage_builder).to have_received(:build).twice
     end
 
+    it do
+      collect_build
+      expect(storage_builder).to have_received(:add_source_name).with(source_name).twice
+    end
+
     it { is_expected.to be_success.with_instance_of(Sources::Collect) }
 
     context 'by checking the attributes of collection' do

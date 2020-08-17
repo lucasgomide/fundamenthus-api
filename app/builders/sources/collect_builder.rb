@@ -16,7 +16,7 @@ module Sources
     end
 
     def build
-      storages = attributes[:storage_names].map(&method(:build_storage))
+      storages = attributes[:storage_names].map { |s| build_storage(s, attributes[:source_name]) }
 
       Success(Sources::Collect.new(
         storages: storages,
@@ -26,9 +26,10 @@ module Sources
 
     private
 
-    def build_storage(storage_name)
+    def build_storage(storage_name, source_name)
       builder = storage_factory.create_for(storage_name)
-      builder.build
+      builder.add_source_name(source_name)
+             .build
     end
   end
 end
