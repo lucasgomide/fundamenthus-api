@@ -2,21 +2,22 @@
 
 RSpec.describe SourceOperation, type: :operation do
   subject(:source_operation) { described_class.new }
-  let(:collect_contract) { instance_spy(Sources::CollectContract) }
+  # let(:collect_contract) { instance_spy(Sources::CollectContract) }
   let(:collect_builder) { instance_spy(Sources::CollectBuilder) }
   let(:storage_operation) { instance_spy(StorageOperation) }
 
   let(:app_container_stubs) do
-    Fundamenthus::Container.stub('sources.collect_contract', collect_contract)
+    # Fundamenthus::Container.stub('sources.collect_contract', collect_contract)
     Fundamenthus::Container.stub('sources.collect_builder', collect_builder)
     Fundamenthus::Container.stub('storage_operation', storage_operation)
   end
 
   context '.call' do
     subject(:call) { source_operation.call(input) }
-    let(:input) { { key: 'value' } }
+    let(:source_names) { ['b3'] }
+    let(:storage_names) { ['google_sheets'] }
+    let(:input) { { source_names: source_names, storage_names: storage_names } }
 
-    let(:contract_result) { validation_contract_result(success: true) }
     let(:builder_result) { success(source_collect) }
     let(:source_collect) { build(:source_collect) }
     let(:storage_result) { success({ storage: :ok }) }
@@ -24,7 +25,6 @@ RSpec.describe SourceOperation, type: :operation do
     let(:source_result) { success([]) }
 
     before do
-      allow(collect_contract).to receive(:call).and_return(contract_result)
       allow(collect_builder).to receive(:build).and_return(builder_result)
       allow(storage_operation).to receive(:call).and_return(storage_result)
 
@@ -32,36 +32,34 @@ RSpec.describe SourceOperation, type: :operation do
       allow(source).to receive(:call).and_return(source_result)
     end
 
-    it { is_expected.to be_success.with({ storage: :ok }) }
-
-    it do
-      call
-      expect(collect_contract).to have_received(:call).with(input)
-    end
+    it { is_expected.to match_array([Success({ storage: :ok }), Success({ storage: :ok })]) }
 
     it do
       call
       aggregate_failures do
-        expect(collect_builder).to have_received(:from_contract).with(contract_result.value!)
-        expect(collect_builder).to have_received(:build)
+        expect(collect_builder).to have_received(:with_source_name).with(source_names.first).twice
+        expect(collect_builder).to have_received(:with_storages_names).with(storage_names).twice
+        expect(collect_builder).to have_received(:with_type).with(:stocks)
+        expect(collect_builder).to have_received(:with_type).with(:earnings)
+        expect(collect_builder).to have_received(:build).twice
       end
     end
 
     it do
       call
       aggregate_failures do
-        expect(source_collect).to have_received(:source)
-        expect(source).to have_received(:call)
+        expect(source_collect).to have_received(:source).twice
+        expect(source).to have_received(:call).twice
       end
     end
 
     it do
       call
-      expect(storage_operation).to have_received(:call).with([], source_collect.storages)
+      expect(storage_operation).to have_received(:call).with([], source_collect.storages).twice
     end
 
     context 'when contract validatio has failed' do
-      let(:contract_result) { validation_contract_result(success: false) }
+      let(:input) { { invalid_contract: 'invalid' } }
       it { is_expected.to be_failed.with_instance_of(Dry::Validation::Result) }
     end
 
@@ -77,7 +75,7 @@ RSpec.describe SourceOperation, type: :operation do
 
     context 'when the store data has failed' do
       let(:storage_result) { failure(:store_result_failed) }
-      it { is_expected.to be_failed.with(:store_result_failed) }
+      it { is_expected.to match_array([failure(:store_result_failed), failure(:store_result_failed)]) }
     end
   end
 end

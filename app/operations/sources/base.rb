@@ -7,8 +7,8 @@ module Sources
       include Dry::Monads[:result]
       include Dry::Monads::Do.for(:call)
 
-      def call
-        Success(client.stocks)
+      def call(collect_type)
+        Success(client.send(collect_type))
       end
     end
   end

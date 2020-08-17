@@ -4,26 +4,31 @@ module Storages
 
     SPREADSHEET_KEY = '12hEZvlN8yPyILrvLT80J_6-NDLfkmz2iJ4IX0SLeEcU'.freeze
     WORKSHEET_TITLES = {
-      stocks: 'Fundamentos'
+      stocks: 'Fundamentos',
+      earnings: 'Dividendos'
     }.freeze
 
     option :google_session, default: -> { GoogleDrive::Session.from_config('config/gcp_config.json') }
     option :attributes, default: -> { {} }
 
-    def add_source_name(source_name)
+    def with_source_name(source_name)
       attributes[:source_name] = source_name
+      self
+    end
+
+    def with_type(type)
+      attributes[:type] = type
       self
     end
 
     def build
       worksheets = {}
-      [:stocks].each do |type|
-        title = "#{attributes[:source_name].humanize} - #{WORKSHEET_TITLES[type]}"
 
-        worksheets[type] = Storages::GoogleSheets::Worksheet.new(
-          worksheet: find_or_create_worksheet(title)
-        )
-      end
+      title = "#{attributes[:source_name].humanize} - #{WORKSHEET_TITLES[attributes[:type]]}"
+
+      worksheets[attributes[:type]] = Storages::GoogleSheets::Worksheet.new(
+        worksheet: find_or_create_worksheet(title)
+      )
 
       Storages::GoogleSheets::Spreadsheet.new(worksheets: worksheets)
     end
