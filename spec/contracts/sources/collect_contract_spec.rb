@@ -10,7 +10,7 @@ RSpec.describe Sources::CollectContract, type: :operation do
       let(:input) do
         {
           storage_names: ['abc'],
-          source_name: 'b3',
+          source_names: ['b3'],
         }
       end
 
@@ -22,11 +22,11 @@ RSpec.describe Sources::CollectContract, type: :operation do
       let(:input) do
         {
           storage_names: 123,
-          source_name: nil,
+          source_names: 123,
         }
       end
 
-      its([:source_name]) { is_expected.to match_array('must be filled') }
+      its([:source_names]) { is_expected.to match_array('must be an array') }
       its([:storage_names]) { is_expected.to match_array('must be an array') }
     end
   end

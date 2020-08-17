@@ -8,17 +8,25 @@ RSpec.describe Storages::GoogleSheetsBuilder, type: :builder do
 
   it { expect(described_class::SPREADSHEET_KEY).to eql('12hEZvlN8yPyILrvLT80J_6-NDLfkmz2iJ4IX0SLeEcU') }
 
-  context '.add_source_name' do
-    subject(:add_source_name) { builder.add_source_name(source_name) }
+  context '.with_source_name' do
+    subject(:with_source_name) { builder.with_source_name(source_name) }
     let(:source_name) { 'any_source' }
 
-    its(:attributes) { is_expected.to eql(source_name: 'any_source') }
+    its(:attributes) { is_expected.to eql(source_name: source_name) }
+  end
+
+  context '.with_type' do
+    subject(:with_type) { builder.with_type(type) }
+    let(:type) { 'any_type' }
+
+    its(:attributes) { is_expected.to eql(type: type) }
   end
 
   context '.build' do
     let(:builder) do
-      described_class.new(google_session: google_session, attributes: { source_name: 'the_source_name' })
+      described_class.new(google_session: google_session, attributes: { type: type, source_name: 'the_source_name' })
     end
+    let(:type) { :stocks }
 
     subject(:builder_build) { builder.build }
 
@@ -35,6 +43,15 @@ RSpec.describe Storages::GoogleSheetsBuilder, type: :builder do
     it do
       builder_build
       expect(google_session).to have_received(:spreadsheet_by_key).with(described_class::SPREADSHEET_KEY)
+    end
+
+    context 'when type is earnings' do
+      let(:type) { :earnings }
+
+      it do
+        builder_build
+        expect(spreadsheet).to have_received(:worksheet_by_title).with('The source name - Dividendos')
+      end
     end
 
     it do
