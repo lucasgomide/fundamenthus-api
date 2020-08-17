@@ -22,11 +22,11 @@ RSpec.describe Sources::CollectContract, type: :operation do
       let(:input) do
         {
           storage_names: 123,
-          source_names: 123,
+          source_names: [123],
         }
       end
 
-      its([:source_names]) { is_expected.to match_array('must be an array') }
+      its([:source_names]) { is_expected.to match_array([[0, ["must be one of: b3, status_invest, fundamentos"]]]) }
       its([:storage_names]) { is_expected.to match_array('must be an array') }
     end
   end
