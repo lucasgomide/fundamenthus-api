@@ -139,7 +139,7 @@ GEM
     fast_blank (1.0.0)
     fastimage (2.2.0)
     ffi (1.13.1)
-    fundamenthus-client (0.1.0.rc1)
+    fundamenthus-client (0.1.0.rc2)
       curb (~> 0.9)
       nokogiri (~> 1.6)
     globalid (0.4.2)
