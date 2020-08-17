@@ -18,6 +18,18 @@ module MonadsResult
   def list(*value)
     Dry::Monads::List[*value]
   end
+
+  def validation_contract_result(success: true)
+    schema = Class.new(Dry::Validation::Contract) do
+      schema do
+        required(:success)
+      end
+      rule(:success) do
+        key.failure('failure') unless success
+      end
+    end.new
+    schema.(success: success).to_monad
+  end
 end
 
 RSpec.configure do |config|
