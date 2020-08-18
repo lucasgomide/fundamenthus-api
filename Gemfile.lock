@@ -64,6 +64,9 @@ GEM
     declarative-option (0.1.0)
     diff-lcs (1.4.4)
     dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     dry-auto_inject (0.7.0)
       dry-container (>= 0.3.4)
     dry-configurable (0.11.6)
@@ -385,6 +388,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.1.0)
   curb
+  dotenv-rails
   dry-monads
   dry-rails
   factory_bot_rails
