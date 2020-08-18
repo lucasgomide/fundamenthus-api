@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://rubygems.pkg.github.com/lucasgomide'
 
-ruby '2.6.1'
+ruby '2.6.6'
 
 gem 'rails', '~> 5.2.3'
 gem 'pg', '>= 0.18', '< 2.0'
