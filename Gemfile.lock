@@ -147,7 +147,7 @@ GEM
     fugit (1.3.3)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.1)
-    fundamenthus-client (0.1.0.rc3)
+    fundamenthus-client (0.1.0.rc4)
       curb (~> 0.9)
       nokogiri (~> 1.6)
     globalid (0.4.2)
