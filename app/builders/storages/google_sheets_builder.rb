@@ -8,7 +8,7 @@ module Storages
       earnings: 'Dividendos'
     }.freeze
 
-    option :google_session, default: -> { GoogleDrive::Session.from_config('config/gcp_config.json') }
+    option :google_session, default: -> { GoogleDrive::Session.from_service_account_key(StringIO.new(ENV['GOOGLE_APPLICATION_CREDENTIALS'])) }
     option :attributes, default: -> { {} }
 
     def with_source_name(source_name)
