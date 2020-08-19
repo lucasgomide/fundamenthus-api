@@ -16,6 +16,7 @@ gem 'google-drive'
 gem 'fundamenthus-client', '<1'
 gem 'sidekiq-scheduler'
 gem 'sentry-raven'
+gem 'newrelic_rpm'
 
 group :development, :test do
   gem 'pry-byebug'
