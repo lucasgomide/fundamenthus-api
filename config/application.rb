@@ -38,6 +38,7 @@ module Fundamenthus
 
     config.generators do |g|
       g.orm :mongoid
+      g.test_framework  :rspec, fixture: false
     end
   end
 end
