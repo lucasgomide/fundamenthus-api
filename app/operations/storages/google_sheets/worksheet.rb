@@ -9,6 +9,15 @@ module Storages
       def save(result)
         return Success(:no_result) if result.blank?
 
+        result.each do |r|
+          r.keys.each do |key|
+            if r[key].is_a?(Hash)
+              r[key].keys.each(& -> k { r["#{key}.#{k}"] = r[key][k] })
+              r.delete(key)
+            end
+          end
+        end
+
         result.first.keys.each_with_index do |key, index|
           worksheet[1, index + 1] = key
         end

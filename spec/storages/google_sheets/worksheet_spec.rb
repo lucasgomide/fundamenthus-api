@@ -15,7 +15,7 @@ RSpec.describe Storages::GoogleSheets::Worksheet, type: :storage do
     end
 
     context 'when the result not empty' do
-      let(:result) { [{ key: 'value' }] }
+      let(:result) { [{ with_hash: { a: 1, b: 2 }, c: 3 }, { with_hash: { a: 4, b: 5 }, c: 6 }] }
 
       it { is_expected.to be_success.with(:saved) }
 
