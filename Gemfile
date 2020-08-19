@@ -17,6 +17,7 @@ gem 'fundamenthus-client', '<1'
 gem 'sidekiq-scheduler'
 gem 'sentry-raven'
 gem 'newrelic_rpm'
+gem 'mongoid', '~> 7.0.5'
 
 group :development, :test do
   gem 'pry-byebug'
