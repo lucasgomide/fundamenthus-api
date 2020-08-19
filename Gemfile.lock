@@ -339,6 +339,8 @@ GEM
     safe_yaml (1.0.5)
     sassc (2.4.0)
       ffi (~> 1.9)
+    sentry-raven (3.0.0)
+      faraday (>= 1.0)
     servolux (0.13.0)
     sidekiq (6.1.1)
       connection_pool (>= 2.2.2)
@@ -402,6 +404,7 @@ DEPENDENCIES
   rspec-its
   rspec-rails
   rubocop-rails
+  sentry-raven
   sidekiq
   sidekiq-scheduler
   spring

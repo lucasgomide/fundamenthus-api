@@ -15,6 +15,7 @@ gem 'dry-monads'
 gem 'google-drive'
 gem 'fundamenthus-client', '<1'
 gem 'sidekiq-scheduler'
+gem 'sentry-raven'
 
 group :development, :test do
   gem 'pry-byebug'
