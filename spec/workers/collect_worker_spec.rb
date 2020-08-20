@@ -15,7 +15,7 @@ RSpec.describe CollectWorker, type: :worker do
       perform
       expect(operation).to have_received(:call).with(
         source_names: ['b3', 'status_invest', 'fundamentos'],
-        storage_names: ['google_sheets']
+        storage_names: ['google_sheets', 'mongo_db']
       )
     end
   end
