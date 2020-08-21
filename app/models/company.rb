@@ -6,6 +6,9 @@ class Company
 
   validates :ticker_symbol, :name, presence: true
 
+  has_many :earnings
+  has_many :fundamentals
+
   index({ ticker_symbol: 1 }, { unique: true })
   index({ name: 1 })
   index({ segment: 1 })
