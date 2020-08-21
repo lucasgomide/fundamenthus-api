@@ -168,7 +168,7 @@ production:
     default:
       # Defines the name of the default database that Mongoid can connect to.
       # (required).
-      uri: <%= ENV.fetch("MONGO_URL") %>
+      uri: <%= ENV["MONGO_URL"] %>
       options:
         server_selection_timeout: 5
       options:
