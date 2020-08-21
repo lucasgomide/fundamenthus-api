@@ -23,8 +23,13 @@ module Storages
       private
 
       def build_data(result)
+        company = Company.find_or_initialize_by(ticker_symbol: result[:company_info][:ticker_symbol]).tap do |c|
+          c.name = result[:company_info][:name]
+          c.save!
+        end
+
         {
-          company: Company.find_or_create_by(result[:company_info]),
+          company: company,
           data: result.except(:company_info)
         }
       end
